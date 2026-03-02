@@ -1,8 +1,8 @@
 # TanAILite
 
 ## TanaAI ve TanAI-Lite nedir?
-**TanAI-Lite, TanAI mimarisinin açık kaynaklı sürümüdür. Gerçek model yapısının GPT sürümü olacak şekilde basitleştirilmiştir.**
-TanAI çekirdeğinde birçok modern yapı kullanır ve Transformer çekirdeğinde Fused, Ecv ve Chronos projeksiyonlarına sahiptir.. 
+**TanAI-Lite, TanAI mimarisinin basitleştirilmiş açık kaynaklı sürümüdür. Gerçek model yapısının (GAT - Generative Adaptive Transformer), GPT sürümü halinde basitleştirilmiş / sadeleştirilmiş versiyonudur.**<br><br>
+TanAI çekirdeğinde birçok modern yapı kullanır ve Transformer çekirdeğinde Fused, Ecv ve Chronos projeksiyonlarına sahiptir. *(Lite modelde bu mimariler yoktur)*
 - **Fused**: Konu ve anlamsal bağlam tutarlılığı için 256D vektör projeksiyonu.
 - **Ecv** *(emotional conditioning vector)*: Duygusal bağlam tutarlılığı için 64D vektör projeksiyonu. Ecv için Robert Plutchik'in 8 duygu yapısı kullanıldı ve binlerce duygusal cümle vektörlere dönüştürüldü. Bu veri kümesinden 48D duygu vektörü oluşturulur ve Duygusal Kullanıcı Profilinden 16D vektör oluşturulur..
 - **Chronos**: Zaman frekanslarını öğrenmek için 32D vektör projeksiyonu. LLM'ler zaman serilerini bilmezler ve promptlardan net öğrenim sağlayamazlar. Chronos, geçmişi algılamak ve geleceği tahmin etmek için tasarlanmıştır.
@@ -88,17 +88,17 @@ Modelin çıkarım testlerini gerçekleştirin.
 > Temel model sadece 5000 adımda eğitilmiştir ve henüz dili öğrenmemiştir. Lütfen en az 80-100 bin adımda eğitin ve çıkarım kontrollerini gerçekleştirin.
 > 
 > **Encoder dosyası**: https://tanai.xyz/tanai/encoder_best.pt<br>
-> Encoder raporlarında retrieval_at1 > 0,7, mrr > 0,50, mean_margin > 0,05 gibi değerleri aşan enkoder çıkışlarının kullanılmasını öneririz. *(Bu enkoder dosyası, test için 300 adım boyunca eğitilmiştir.)*
+> Encoder raporlarında retrieval_at1 > 0.7, mrr > 0.50, mean_margin > 0.05 gibi değerleri aşan encoder çıkışlarının kullanılmasını öneririz. *(Bu encoder dosyası, test için 300 adım boyunca eğitilmiştir.)*
 
 ## Raporlar
 > [!NOTE]
 > Eğitim raporları için **data/reports** klasöründeki JSON dosyalarını inceleyebilirsiniz.
 
 ## Dokümanlar
-- 00_scope.md
-- 01_architecture.md
-- 02_training_flow.md
-- 03_inference_flow.md
-- 04_run.md
-- 05_tanai_lite_info.md
-- 06_corpus_selection.md
+- 00_scope.md *(TanAILite basit kapsamı)*
+- 01_architecture.md *(TanAILite mimarisi)*
+- 02_training_flow.md *(Eğitim akışı)*
+- 03_inference_flow.md *(Model çıkarım akışı)*
+- 04_run.md *(Adım adım çalıştırma akışı)*
+- 05_tanai_lite_info.md *(Modelin çıktısı ve parametre sayısı)*
+- 06_corpus_selection.md *(Hangi corpus ile eğitim yapmalıyım?)*

